@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		45C71A4723FC358C00435669 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 45C71A4623FC358C00435669 /* Lottie */; };
+		45C71A4E23FC3B3100435669 /* badge.json in Resources */ = {isa = PBXBuildFile; fileRef = 45C71A4D23FC3B3100435669 /* badge.json */; };
+		45C71A5123FC3C7B00435669 /* UserProfileCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C71A5023FC3C7B00435669 /* UserProfileCVCell.swift */; };
+		45C71A5323FC449E00435669 /* cross.json in Resources */ = {isa = PBXBuildFile; fileRef = 45C71A5223FC449E00435669 /* cross.json */; };
+		45C71A5523FC459400435669 /* loading.json in Resources */ = {isa = PBXBuildFile; fileRef = 45C71A5423FC459400435669 /* loading.json */; };
+		45C71A5823FC4C4000435669 /* AnimaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C71A5723FC4C4000435669 /* AnimaView.swift */; };
 		45C94C6723FC2585004B0AD6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C94C6623FC2585004B0AD6 /* AppDelegate.swift */; };
 		45C94C6923FC2585004B0AD6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C94C6823FC2585004B0AD6 /* ViewController.swift */; };
 		45C94C6C23FC2585004B0AD6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45C94C6A23FC2585004B0AD6 /* Main.storyboard */; };
@@ -27,6 +32,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		45C71A4D23FC3B3100435669 /* badge.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = badge.json; sourceTree = "<group>"; };
+		45C71A5023FC3C7B00435669 /* UserProfileCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileCVCell.swift; sourceTree = "<group>"; };
+		45C71A5223FC449E00435669 /* cross.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cross.json; sourceTree = "<group>"; };
+		45C71A5423FC459400435669 /* loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loading.json; sourceTree = "<group>"; };
+		45C71A5723FC4C4000435669 /* AnimaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimaView.swift; sourceTree = "<group>"; };
 		45C94C6323FC2585004B0AD6 /* GitHubMemberListTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitHubMemberListTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45C94C6623FC2585004B0AD6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		45C94C6823FC2585004B0AD6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -58,6 +68,66 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		45C71A4823FC391C00435669 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				45C71A5623FC4C0000435669 /* Component */,
+				45C71A4B23FC39E300435669 /* Assets */,
+				45C71A4923FC393600435669 /* Cell */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		45C71A4923FC393600435669 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				45C71A4A23FC394300435669 /* CollectionViewCell */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		45C71A4A23FC394300435669 /* CollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				45C71A4F23FC3B7C00435669 /* UserProfileCVCell */,
+			);
+			path = CollectionViewCell;
+			sourceTree = "<group>";
+		};
+		45C71A4B23FC39E300435669 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				45C71A4C23FC39F000435669 /* LottieAnimation */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		45C71A4C23FC39F000435669 /* LottieAnimation */ = {
+			isa = PBXGroup;
+			children = (
+				45C71A5423FC459400435669 /* loading.json */,
+				45C71A5223FC449E00435669 /* cross.json */,
+				45C71A4D23FC3B3100435669 /* badge.json */,
+			);
+			path = LottieAnimation;
+			sourceTree = "<group>";
+		};
+		45C71A4F23FC3B7C00435669 /* UserProfileCVCell */ = {
+			isa = PBXGroup;
+			children = (
+				45C71A5023FC3C7B00435669 /* UserProfileCVCell.swift */,
+			);
+			path = UserProfileCVCell;
+			sourceTree = "<group>";
+		};
+		45C71A5623FC4C0000435669 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				45C71A5723FC4C4000435669 /* AnimaView.swift */,
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
 		45C94C5A23FC2585004B0AD6 = {
 			isa = PBXGroup;
 			children = (
@@ -79,6 +149,7 @@
 		45C94C6523FC2585004B0AD6 /* GitHubMemberListTest */ = {
 			isa = PBXGroup;
 			children = (
+				45C71A4823FC391C00435669 /* View */,
 				45C94C6623FC2585004B0AD6 /* AppDelegate.swift */,
 				45C94C6823FC2585004B0AD6 /* ViewController.swift */,
 				45C94C6A23FC2585004B0AD6 /* Main.storyboard */,
@@ -185,7 +256,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45C71A5323FC449E00435669 /* cross.json in Resources */,
 				45C94C7123FC2587004B0AD6 /* LaunchScreen.storyboard in Resources */,
+				45C71A5523FC459400435669 /* loading.json in Resources */,
+				45C71A4E23FC3B3100435669 /* badge.json in Resources */,
 				45C94C6E23FC2587004B0AD6 /* Assets.xcassets in Resources */,
 				45C94C6C23FC2585004B0AD6 /* Main.storyboard in Resources */,
 			);
@@ -206,7 +280,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				45C94C6923FC2585004B0AD6 /* ViewController.swift in Sources */,
+				45C71A5123FC3C7B00435669 /* UserProfileCVCell.swift in Sources */,
 				45C94C6723FC2585004B0AD6 /* AppDelegate.swift in Sources */,
+				45C71A5823FC4C4000435669 /* AnimaView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
