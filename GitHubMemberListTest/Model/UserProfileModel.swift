@@ -9,6 +9,7 @@
 import Foundation
 
 struct UserProfileModel: Codable {
+    let id: Int
     let login: String
     let avatarUrl: String
     let siteAdmin: Bool

@@ -41,12 +41,14 @@ extension UserProfileViewModel: UserProfileCVCellViewModel {
             with: UrlRequest
         ) { [weak self] data, response, error in
             
-            if let error = error {
-                assertionFailure(error.localizedDescription)
+            if let _ = error {
+//                assertionFailure(error.localizedDescription)
+                done()
                 return
             }
             guard let data = data else {
                 assertionFailure("data is nil")
+                done()
                 return
             }
             self?.image = UIImage(data: data)
