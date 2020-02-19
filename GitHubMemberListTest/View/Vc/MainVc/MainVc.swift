@@ -43,6 +43,7 @@ class MainVc: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.backgroundColor = .brown
         layoutVc()
         setVc()
     }

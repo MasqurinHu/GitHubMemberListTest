@@ -12,7 +12,7 @@ class MainCoordinator {
     
     var window: UIWindow?
     
-    weak var nowShowVc: UIViewController?
+    weak var navigationVc: UINavigationController?
     
     weak var mainVc: UIViewController?
 }
@@ -22,17 +22,23 @@ extension MainCoordinator {
     func startWithWindow() {
         
         let window = UIWindow()
-        window.rootViewController = getMainVc()
-        nowShowVc = window.rootViewController
+        let vc = getMainVc()
+        let nav = UINavigationController(rootViewController: vc)
+        navigationVc = nav
+        window.rootViewController = nav
         self.window = window
         window.makeKeyAndVisible()
+    }
+    
+    func gopageListVc() {
+        navigationVc?.pushViewController(getPagelistVc(), animated: true)
     }
 }
 
 extension MainCoordinator: MainViewModelDelegate {
     
     func goPageList() {
-        print("去第一頁")
+        gopageListVc()
     }
     
     func getMainVc() -> UIViewController {
@@ -43,6 +49,19 @@ extension MainCoordinator: MainViewModelDelegate {
         
         return vc
     }
+}
+
+extension MainCoordinator: PageViewModelDelegate {
     
+    func goUserInfoPage(with urlString: String) {
+        print("user info url = \(urlString)")
+    }
     
+    func getPagelistVc() -> UIViewController {
+        
+        let vc = PageVc()
+        let viewModel = PageViewModel()
+        vc.viewModel = viewModel
+        return vc
+    }
 }
