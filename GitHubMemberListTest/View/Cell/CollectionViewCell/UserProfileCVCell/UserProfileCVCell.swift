@@ -9,14 +9,14 @@
 import UIKit
 
 protocol UserProfileCVCellDelegate: AnyObject {
-    
+    func waitForRefresh(done: @escaping () -> ())
+    func cancelTask()
 }
 
 protocol UserProfileCVCellDataSourse: AnyObject {
-    func getAvata() -> UIImage
+    func getAvata() -> UIImage?
     func getLogInName() -> String
     func getHasBadge() -> Bool
-    
 }
 
 typealias UserProfileCVCellViewModel = UserProfileCVCellDelegate & UserProfileCVCellDataSourse
@@ -26,6 +26,7 @@ class UserProfileCVCell: UICollectionViewCell {
     private let avatar: UIImageView = UIImageView()
     private let logInNameLb: UILabel = UILabel()
     private let repoNumberLb: UILabel = UILabel()
+    private let anima: AnimaView = AnimaFactory.getAnima(with: .avatar)
     
     private var badgeView: AnimaView = AnimaFactory.getAnima(with: .badge)
     
@@ -40,14 +41,25 @@ class UserProfileCVCell: UICollectionViewCell {
                 return
             }
             setCell(with: dataSource)
+            delegate?.waitForRefresh { [weak self] in
+                
+                DispatchQueue.main.async { [weak self] in
+                    guard let dataSource = self?.dataSoure else {
+                        return
+                    }
+                    self?.setCell(with: dataSource)
+                }
+            }
         }
     }
     
-    var viewModel: ViewModel? {
-        didSet {
-            delegate = viewModel
-            dataSoure = viewModel
-        }
+    private var viewModel: ViewModel?
+    
+    func setViewModel(with viewModel: ViewModel) {
+        self.viewModel?.cancelTask()
+        self.viewModel = viewModel
+        delegate = viewModel
+        dataSoure = viewModel
     }
     
     override init(frame: CGRect) {
@@ -84,7 +96,17 @@ extension UserProfileCVCell {
     }
     
     private func setAvatar(with dataSource: DataSource) {
+        
         avatar.image = dataSource.getAvata()
+        if let _ = dataSource.getAvata() {
+            anima.isHidden = true
+            anima.pause()
+        } else {
+            anima.isHidden = false
+            anima.setLootMode(with: .autoReverSe)
+            anima.play { isDone in
+            }
+        }
     }
     private func setLogInNameLb(with dataSource: DataSource) {
         logInNameLb.text = dataSource.getLogInName()
@@ -114,15 +136,22 @@ extension UserProfileCVCell {
     }
     
     private func layoutAvatar() {
-        setSameLayout(with: avatar)
-        NSLayoutConstraint.activate([
-            avatar.widthAnchor.constraint(equalToConstant: My.avatarLength),
-            avatar.heightAnchor.constraint(equalToConstant: My.avatarLength),
-            avatar.leadingAnchor.constraint(equalTo: leadingAnchor, constant: horizontalPadding),
-            avatar.centerYAnchor.constraint(equalTo: centerYAnchor)
-        ])
+        
+        setSameAvatarLayout(with: anima)
+        setSameAvatarLayout(with: avatar)
         avatar.layer.cornerRadius = My.avatarRadius
         avatar.clipsToBounds = true
+    }
+    
+    private func setSameAvatarLayout(with newView: UIView) {
+        
+        setSameLayout(with: newView)
+        NSLayoutConstraint.activate([
+            newView.widthAnchor.constraint(equalToConstant: My.avatarLength),
+            newView.heightAnchor.constraint(equalToConstant: My.avatarLength),
+            newView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: horizontalPadding),
+            newView.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
     }
     
     private func layoutLogInNameLb() {

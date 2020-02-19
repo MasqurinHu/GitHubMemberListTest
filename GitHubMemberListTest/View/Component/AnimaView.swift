@@ -18,7 +18,8 @@ protocol AnimaView: UIView {
 enum AnimeName: String {
     case loading,
     cross,
-    badge
+    badge,
+    avatar
 }
 
 enum AnimaLoopMode {

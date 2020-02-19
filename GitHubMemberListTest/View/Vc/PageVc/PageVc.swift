@@ -12,7 +12,7 @@ protocol PageVcDelegate: AnyObject {
     func retryAction()
     func lastButtonAction()
     func nextButtonAction()
-    func waitForRefresh(_:() -> ())
+    func waitForRefresh(done: @escaping () -> ())
 }
 
 protocol PageVcDataSource: AnyObject {
@@ -48,7 +48,9 @@ class PageVc: UIViewController {
         layoutVc()
         setVc()
         delegate?.waitForRefresh { [weak self] in
-            self?.setDataSource()
+            DispatchQueue.main.async { [weak self] in
+                self?.setDataSource()
+            }
         }
     }
     
@@ -312,17 +314,9 @@ extension PageVc: UICollectionViewDataSource {
             assertionFailure("vo count error")
             return originalCell
         }
-        cell.viewModel = voBox.userVoList[indexPath.item]
+        cell.setViewModel(with: voBox.userVoList[indexPath.item])
         return cell
     }
-}
-
-extension PageVc {
-    
-}
-
-extension PageVc {
-    
 }
 
 extension PageVc {
