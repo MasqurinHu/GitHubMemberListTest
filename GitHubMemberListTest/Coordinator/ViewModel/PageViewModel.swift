@@ -16,6 +16,16 @@ class PageViewModel {
     
     typealias Delegate = PageViewModelDelegate
     weak var delegate: Delegate?
+    
+    private var viewStatus: PageVc.Status = .loading
+    private var nowPage: Int = .zero
+}
+
+extension PageViewModel {
+    
+    private var pageSize: Int {20}
+    
+    private var baseUrl: String {"https://api.github.com/users?page=100&per_page=20&since=7"}
 }
 
 extension PageViewModel: PageVcViewModel {
@@ -37,12 +47,5 @@ extension PageViewModel: PageVcViewModel {
 }
 
 extension PageViewModel {
-    func getStatus() -> PageVc.Status {
-        
-        var ll:[UserProfileCVCellViewModel] = []
-        for _ in 0 ..< 20 {
-            ll.append(DummyData())
-        }
-        return .loadDone(PageVc.Vo(pageName: "999", haveLastPage: true, haveNextPage: true, userVoList: ll))
-    }
+    func getStatus() -> PageVc.Status {viewStatus}
 }
