@@ -19,7 +19,10 @@ enum AnimeName: String {
     case loading,
     cross,
     badge,
-    avatar
+    avatar,
+    bust,
+    location,
+    brower
 }
 
 enum AnimaLoopMode {
