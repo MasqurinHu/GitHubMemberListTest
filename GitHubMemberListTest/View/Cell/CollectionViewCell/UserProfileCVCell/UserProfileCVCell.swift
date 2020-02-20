@@ -17,6 +17,7 @@ protocol UserProfileCVCellDataSourse: AnyObject {
     func getAvata() -> UIImage?
     func getLogInName() -> String
     func getHasBadge() -> Bool
+    func getUserInfoUrlString() -> String?
 }
 
 typealias UserProfileCVCellViewModel = UserProfileCVCellDelegate & UserProfileCVCellDataSourse

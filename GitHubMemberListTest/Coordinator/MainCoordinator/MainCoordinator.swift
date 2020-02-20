@@ -15,6 +15,8 @@ class MainCoordinator {
     weak var navigationVc: UINavigationController?
     
     weak var mainVc: UIViewController?
+    
+    private var userInfoCoordinator: UserInfoCoordinator?
 }
 
 extension MainCoordinator {
@@ -30,8 +32,17 @@ extension MainCoordinator {
         window.makeKeyAndVisible()
     }
     
-    func gopageListVc() {
+    private func gopageListVc() {
         navigationVc?.pushViewController(getPagelistVc(), animated: true)
+    }
+    
+    private func goUserInfoCoorDinator(with url: String?) {
+        guard  let navigationVc = navigationVc else {
+            return
+        }
+        let coordinator = getUserInfoCoordinator(with: url)
+        userInfoCoordinator = coordinator
+        coordinator.start(with: navigationVc, urlString: url)
     }
 }
 
@@ -53,15 +64,31 @@ extension MainCoordinator: MainViewModelDelegate {
 
 extension MainCoordinator: PageViewModelDelegate {
     
-    func goUserInfoPage(with urlString: String) {
-        print("user info url = \(urlString)")
+    func goUserInfoPage(with urlString: String?) {
+        print("user info url = \(String(describing: urlString))")
+        goUserInfoCoorDinator(with: urlString)
     }
     
     func getPagelistVc() -> UIViewController {
         
         let vc = PageVc()
         let viewModel = PageViewModel()
+        viewModel.delegate = self
         vc.viewModel = viewModel
         return vc
+    }
+}
+
+extension MainCoordinator: UserInfoCoordinatorDelegate {
+    
+    func closeUserInfoCoordinator() {
+        print("close UserInfo")
+        userInfoCoordinator = nil
+    }
+    
+    func getUserInfoCoordinator(with url: String?) -> UserInfoCoordinator {
+        let coordinator = UserInfoCoordinator()
+        coordinator.delegate = self
+        return coordinator
     }
 }

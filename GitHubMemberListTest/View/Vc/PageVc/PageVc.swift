@@ -13,6 +13,7 @@ protocol PageVcDelegate: AnyObject {
     func lastButtonAction()
     func nextButtonAction()
     func waitForRefresh(done: @escaping () -> ())
+    func didSelectUser(with userInfoUrl: String?)
 }
 
 protocol PageVcDataSource: AnyObject {
@@ -61,6 +62,8 @@ class PageVc: UIViewController {
     private let loadingView: UIView = UIView()
     private let retryView: UIView = UIView()
     private lazy var collectionView: UICollectionView = getCollectionView()
+    
+    private var voList: [UserProfileCVCellViewModel] = []
 }
 
 extension PageVc {
@@ -272,7 +275,10 @@ extension PageVc {
 }
 
 extension PageVc: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let urlString: String? = voList[indexPath.item].getUserInfoUrlString()
+        delegate?.didSelectUser(with: urlString)
+    }
 }
 
 extension PageVc: UICollectionViewDataSource {
@@ -315,6 +321,7 @@ extension PageVc: UICollectionViewDataSource {
             return originalCell
         }
         cell.setViewModel(with: voBox.userVoList[indexPath.item])
+        voList = voBox.userVoList
         return cell
     }
 }
