@@ -35,7 +35,7 @@ class UserinfoVc: UIViewController {
     weak var delegate: Delegate?
     weak var dataSource: DataSource? {
         didSet {
-            setDataSource()
+            setDataSource(with: .loading)
         }
     }
     
@@ -51,11 +51,11 @@ class UserinfoVc: UIViewController {
 
         view.backgroundColor = .brown
         setVc()
-        setDataSource()
+        setDataSource(with: .loading)
         layoutVc()
         delegate?.waitForREfresh() { [weak self] status in
             DispatchQueue.main.async { [weak self] in
-                self?.setDataSource()
+                self?.setDataSource(with: status)
             }
         }
     }
@@ -87,6 +87,7 @@ class UserinfoVc: UIViewController {
         with: .brower
     )
     private let linkBtn: UIButton = UIButton(type: .system)
+    private let errorlb: UILabel = UILabel()
     
 }
 
@@ -108,11 +109,32 @@ extension UserinfoVc {
 }
 
 extension UserinfoVc {
-    private func setDataSource() {
+    private func setDataSource(with status: Status) {
         guard let dataSource = dataSource else {
             assertionFailure("not have datasource")
             return
         }
+        switch status {
+        case .loading:
+            loadingView.setLootMode(with: .loop)
+            maskView.isHidden = false
+            loadingView.isHidden = false
+            errorlb.isHidden = true
+            loadingView.play { isDone in
+                
+            }
+            
+        case .loadDone(_):
+            loadingView.pause()
+            maskView.isHidden = true
+            
+        case .loadFail:
+            maskView.isHidden = false
+            loadingView.isHidden = true
+            errorlb.isHidden = false
+            return
+        }
+        
         setAvatar(with: dataSource)
         setName(with: dataSource)
         setBio(with: dataSource)
@@ -166,6 +188,8 @@ extension UserinfoVc {
 extension UserinfoVc {
     private func setVc() {
         setCrossBtn()
+        setMaskView()
+        setErrorLb()
         setContentView()
         setNameLb()
         setBioLb()
@@ -180,6 +204,16 @@ extension UserinfoVc {
         crossBtn.setTitle("X", for: .normal)
         crossBtn.titleLabel?.font = crossBtn.titleLabel?.font.withSize(40)
         crossBtn.addTarget(self, action: #selector(closeBtnAction(_:)), for: .touchUpInside)
+    }
+    private func setMaskView() {
+        maskView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.7)
+    }
+    
+    private func setErrorLb() {
+        errorlb.font = UIFont().withSize(20)
+        errorlb.textAlignment = .center
+        errorlb.textColor = .red
+        errorlb.text = "Error please click X button!"
     }
     private func setContentView() {
         contentView.backgroundColor = .white
@@ -241,6 +275,8 @@ extension UserinfoVc {
         layoutScrollView()
         layoutContentView()
         layoutMaskView()
+        layoutLoadingView()
+        layoutErrorLb()
         layoutAvatarLoadingView()
         layoutAvatarImage()
         layoutNameLb()
@@ -329,7 +365,38 @@ extension UserinfoVc {
                 equalTo: view.bottomAnchor
             )
         ])
-
+    }
+    
+    private func layoutLoadingView() {
+        
+        loadingView.translatesAutoresizingMaskIntoConstraints = false
+        maskView.addSubview(loadingView)
+        let length = UIScreen.main.bounds.width * 0.7
+        NSLayoutConstraint.activate([
+            loadingView.centerXAnchor.constraint(
+                equalTo: maskView.centerXAnchor
+            ),
+            loadingView.centerYAnchor.constraint(
+                equalTo: maskView.centerYAnchor
+            ),
+            loadingView.widthAnchor.constraint(equalToConstant: length),
+            loadingView.heightAnchor.constraint(equalToConstant: length)
+        ])
+    }
+    
+    private func layoutErrorLb() {
+        
+        errorlb.translatesAutoresizingMaskIntoConstraints = false
+        maskView.addSubview(errorlb)
+        NSLayoutConstraint.activate([
+            errorlb.trailingAnchor.constraint(
+                equalTo: maskView.trailingAnchor
+            ),
+            errorlb.centerYAnchor.constraint(
+                equalTo: maskView.centerYAnchor
+            ),
+            errorlb.leadingAnchor.constraint(equalTo: maskView.leadingAnchor)
+        ])
     }
     
     private func layoutAvatarLoadingView() {
