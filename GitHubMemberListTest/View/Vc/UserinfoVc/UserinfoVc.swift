@@ -191,6 +191,7 @@ extension UserinfoVc {
         setMaskView()
         setErrorLb()
         setContentView()
+        setAvatar()
         setNameLb()
         setBioLb()
         setHypen()
@@ -218,7 +219,10 @@ extension UserinfoVc {
     private func setContentView() {
         contentView.backgroundColor = .white
     }
-    
+    private func setAvatar() {
+        avatarImage.layer.cornerRadius = avatarLength / 2
+        avatarImage.clipsToBounds = true
+    }
     private func setNameLb() {
         nameLb.font = nameLb.font.withSize(20)
         nameLb.textAlignment = .center

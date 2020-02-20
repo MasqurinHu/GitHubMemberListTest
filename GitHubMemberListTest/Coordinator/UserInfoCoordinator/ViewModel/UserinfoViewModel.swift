@@ -26,6 +26,7 @@ class UserinfoViewModel {
     private var viewStatus: UserinfoVc.Status = .loading
     private let urlString: String?
     private var model: UserInfoModel?
+    private var image: UIImage?
 }
 
 extension UserinfoViewModel: UserinfoVcViewModel {
@@ -40,6 +41,9 @@ extension UserinfoViewModel: UserinfoVcViewModel {
         }
         requestTask { [weak self] in
             self?.waitFor?()
+            self?.requestImage { [weak self] in
+                self?.waitFor?()
+            }
         }
     }
     
@@ -52,7 +56,7 @@ extension UserinfoViewModel: UserinfoVcViewModel {
     }
     
     func getAvatar() -> UIImage? {
-        nil
+        image
     }
     
     func getName() -> String? {
@@ -81,6 +85,37 @@ extension UserinfoViewModel: UserinfoVcViewModel {
 }
 
 extension UserinfoViewModel {
+    
+    private func requestImage(done: @escaping () -> ()) {
+        
+        guard let urlString = model?.avatarUrl,
+        let url = URL(string: urlString) else {
+            done()
+            return
+        }
+        let session = URLSession(configuration: .default)
+        let UrlRequest = URLRequest(url: url)
+        let task = session.dataTask(
+            with: UrlRequest
+        ) { [weak self] data, response, error in
+            
+            guard let strongSelf = self else {
+                assertionFailure("self error")
+                return
+            }
+            if let _ = error {
+                done()
+                return
+            }
+            guard let data = data else {
+                done()
+                return
+            }
+            strongSelf.image = UIImage(data: data)
+            done()
+        }
+        task.resume()
+    }
     
     private func requestTask(done: @escaping () -> ()) {
         
