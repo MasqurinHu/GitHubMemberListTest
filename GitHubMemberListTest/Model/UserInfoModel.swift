@@ -14,6 +14,7 @@ struct UserInfoModel: Codable {
     let name: String?
     let bio: String?
     let login: String?
+    let siteAdmin: Bool
     let location: String?
     let blog: String?
 }

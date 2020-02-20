@@ -42,7 +42,7 @@ extension MainCoordinator {
         }
         let coordinator = getUserInfoCoordinator(with: url)
         userInfoCoordinator = coordinator
-        coordinator.start(with: navigationVc)
+        coordinator.start(with: navigationVc, urlString: url)
     }
 }
 

@@ -53,6 +53,11 @@ class UserinfoVc: UIViewController {
         setVc()
         setDataSource()
         layoutVc()
+        delegate?.waitForREfresh() { [weak self] status in
+            DispatchQueue.main.async { [weak self] in
+                self?.setDataSource()
+            }
+        }
     }
     
     private let crossBtn: UIButton = UIButton(type: .custom)

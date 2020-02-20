@@ -21,8 +21,8 @@ class UserInfoCoordinator {
 }
 extension UserInfoCoordinator {
     
-    func start(with sourceVc: UIViewController) {
-        let vc = getUserInfoVc()
+    func start(with sourceVc: UIViewController, urlString: String?) {
+        let vc = getUserInfoVc(with: urlString)
         baseVc = vc
         vc.modalPresentationStyle = .fullScreen
         sourceVc.present(vc, animated: true, completion: nil)
@@ -40,8 +40,8 @@ extension UserInfoCoordinator: UserinfoViewModelDelegate {
         print("click link to \(String(describing: urlString))")
     }
     
-    private func getUserInfoVc() -> UIViewController {
-        let viewmodel: UserinfoViewModel = UserinfoViewModel()
+    private func getUserInfoVc(with urlString: String?) -> UIViewController {
+        let viewmodel: UserinfoViewModel = UserinfoViewModel(with: urlString)
         let vc: UserinfoVc = UserinfoVc()
         vc.viewModel = viewmodel
         viewmodel.delegate = self

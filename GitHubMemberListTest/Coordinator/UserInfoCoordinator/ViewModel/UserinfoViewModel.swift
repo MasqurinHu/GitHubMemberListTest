@@ -13,13 +13,34 @@ protocol UserinfoViewModelDelegate: AnyObject {
     func blogLinkAction(with urlString: String?)
 }
 
-class UserinfoViewModel: UserinfoVcViewModel {
+class UserinfoViewModel {
+    
+    init(with urlString: String?) {
+        self.urlString = urlString
+    }
     
     typealias Delegate = UserinfoViewModelDelegate
     weak var delegate: Delegate?
     
+    private var waitFor: (() -> ())?
+    private var viewStatus: UserinfoVc.Status = .loading
+    private let urlString: String?
+    private var model: UserInfoModel?
+}
+
+extension UserinfoViewModel: UserinfoVcViewModel {
     func waitForREfresh(done: @escaping (UserinfoVc.Status) -> ()) {
-        done(.loading)
+        waitFor = { [weak self] in
+            guard let self = self else {
+                assertionFailure("get self error")
+                done(.loadFail)
+                return
+            }
+            done(self.viewStatus)
+        }
+        requestTask { [weak self] in
+            self?.waitFor?()
+        }
     }
     
     func closeAction() {
@@ -35,26 +56,88 @@ class UserinfoViewModel: UserinfoVcViewModel {
     }
     
     func getName() -> String? {
-        "HK"
+        model?.name
     }
     
     func getBio() -> String? {
-        "jji"
+        model?.bio
     }
     
     func getLogIn() -> String? {
-        "hkjkhjk"
+        model?.login
     }
     
     func haveBadge() -> Bool {
-        false
+        model?.siteAdmin ?? false
     }
     
     func getLocation() -> String? {
-        "jlk"
+        model?.location
     }
     
     func getBlogUrl() -> String? {
-        "jljkl"
+        model?.blog
     }
 }
+
+extension UserinfoViewModel {
+    
+    private func requestTask(done: @escaping () -> ()) {
+        
+        viewStatus = .loading
+        waitFor?()
+        
+        let session = URLSession(configuration: .default)
+        guard let urlString = urlString,
+            let url = URL(string: urlString) else {
+            assertionFailure("urlError")
+                viewStatus = .loadFail
+            done()
+            return
+        }
+        let UrlRequest = URLRequest(url: url)
+        let task = session.dataTask(
+            with: UrlRequest
+        ) { [weak self] data, response, error in
+            
+            guard let strongSelf = self else {
+                assertionFailure("self error")
+                self?.viewStatus = .loadFail
+                return
+            }
+            if let _ = error {
+                strongSelf.viewStatus = .loadFail
+                done()
+                return
+            }
+            guard let data = data else {
+                assertionFailure("data is nil")
+                strongSelf.viewStatus = .loadFail
+                done()
+                return
+            }
+            let jsd = JSONDecoder()
+            jsd.keyDecodingStrategy = .convertFromSnakeCase
+            guard let jsonVo = try? jsd.decode(UserInfoModel.self, from: data) else {
+                assertionFailure("json decode error")
+                self?.viewStatus = .loadFail
+                done()
+                return
+            }
+            strongSelf.model = jsonVo
+            let vo = UserinfoVc.Vo(
+                avataImage: nil,
+                name: jsonVo.name,
+                bio: jsonVo.bio,
+                login: jsonVo.login,
+                haveBadge: jsonVo.siteAdmin,
+                location: jsonVo.location,
+                blogUrl: jsonVo.blog
+            )
+            strongSelf.viewStatus = .loadDone(vo)
+            done()
+        }
+        task.resume()
+    }
+}
+
