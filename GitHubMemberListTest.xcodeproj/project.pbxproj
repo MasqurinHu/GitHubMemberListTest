@@ -25,6 +25,8 @@
 		45C71A7323FD999600435669 /* bust.json in Resources */ = {isa = PBXBuildFile; fileRef = 45C71A7223FD999600435669 /* bust.json */; };
 		45C71A7623FD9EE600435669 /* location.json in Resources */ = {isa = PBXBuildFile; fileRef = 45C71A7423FD9EE600435669 /* location.json */; };
 		45C71A7723FD9EE600435669 /* brower.json in Resources */ = {isa = PBXBuildFile; fileRef = 45C71A7523FD9EE600435669 /* brower.json */; };
+		45C71A7B23FE1CF600435669 /* UserInfoCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C71A7A23FE1CF600435669 /* UserInfoCoordinator.swift */; };
+		45C71A7E23FE1DFF00435669 /* UserinfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C71A7D23FE1DFF00435669 /* UserinfoViewModel.swift */; };
 		45C94C6723FC2585004B0AD6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C94C6623FC2585004B0AD6 /* AppDelegate.swift */; };
 		45C94C6E23FC2587004B0AD6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45C94C6D23FC2587004B0AD6 /* Assets.xcassets */; };
 		45C94C7123FC2587004B0AD6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45C94C6F23FC2587004B0AD6 /* LaunchScreen.storyboard */; };
@@ -59,6 +61,8 @@
 		45C71A7223FD999600435669 /* bust.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = bust.json; sourceTree = "<group>"; };
 		45C71A7423FD9EE600435669 /* location.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = location.json; sourceTree = "<group>"; };
 		45C71A7523FD9EE600435669 /* brower.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = brower.json; sourceTree = "<group>"; };
+		45C71A7A23FE1CF600435669 /* UserInfoCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoCoordinator.swift; sourceTree = "<group>"; };
+		45C71A7D23FE1DFF00435669 /* UserinfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserinfoViewModel.swift; sourceTree = "<group>"; };
 		45C94C6323FC2585004B0AD6 /* GitHubMemberListTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitHubMemberListTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45C94C6623FC2585004B0AD6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		45C94C6D23FC2587004B0AD6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -156,8 +160,8 @@
 		45C71A5923FCBECF00435669 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
-				45C71A5E23FCC74000435669 /* MainCoordinator.swift */,
-				45C71A6023FCC97E00435669 /* ViewModel */,
+				45C71A7823FE1CC400435669 /* MainCoordinator */,
+				45C71A7923FE1CDB00435669 /* UserInfoCoordinator */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -212,6 +216,32 @@
 				45C71A7023FD963500435669 /* UserinfoVc.swift */,
 			);
 			path = UserinfoVc;
+			sourceTree = "<group>";
+		};
+		45C71A7823FE1CC400435669 /* MainCoordinator */ = {
+			isa = PBXGroup;
+			children = (
+				45C71A5E23FCC74000435669 /* MainCoordinator.swift */,
+				45C71A6023FCC97E00435669 /* ViewModel */,
+			);
+			path = MainCoordinator;
+			sourceTree = "<group>";
+		};
+		45C71A7923FE1CDB00435669 /* UserInfoCoordinator */ = {
+			isa = PBXGroup;
+			children = (
+				45C71A7A23FE1CF600435669 /* UserInfoCoordinator.swift */,
+				45C71A7C23FE1DEA00435669 /* ViewModel */,
+			);
+			path = UserInfoCoordinator;
+			sourceTree = "<group>";
+		};
+		45C71A7C23FE1DEA00435669 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				45C71A7D23FE1DFF00435669 /* UserinfoViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		45C94C5A23FC2585004B0AD6 = {
@@ -375,10 +405,12 @@
 				45C71A7123FD963500435669 /* UserinfoVc.swift in Sources */,
 				45C71A6C23FD2F6600435669 /* UserProfileViewModel.swift in Sources */,
 				45C71A5123FC3C7B00435669 /* UserProfileCVCell.swift in Sources */,
+				45C71A7B23FE1CF600435669 /* UserInfoCoordinator.swift in Sources */,
 				45C71A6523FCD02000435669 /* PageVc.swift in Sources */,
 				45C94C6723FC2585004B0AD6 /* AppDelegate.swift in Sources */,
 				45C71A6723FCEBE400435669 /* PageViewModel.swift in Sources */,
 				45C71A5823FC4C4000435669 /* AnimaView.swift in Sources */,
+				45C71A7E23FE1DFF00435669 /* UserinfoViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

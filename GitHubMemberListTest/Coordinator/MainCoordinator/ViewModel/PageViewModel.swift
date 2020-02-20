@@ -9,7 +9,7 @@
 import Foundation
 
 protocol PageViewModelDelegate: AnyObject {
-    func goUserInfoPage(with urlString: String)
+    func goUserInfoPage(with urlString: String?)
 }
 
 class PageViewModel {
@@ -52,6 +52,10 @@ extension PageViewModel {
 }
 
 extension PageViewModel: PageVcViewModel {
+    
+    func didSelectUser(with userInfoUrl: String?) {
+        delegate?.goUserInfoPage(with: userInfoUrl)
+    }
     
     func retryAction() {
         let useSince: Int

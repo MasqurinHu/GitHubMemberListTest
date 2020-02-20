@@ -49,6 +49,7 @@ class UserinfoVc: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.backgroundColor = .brown
         setVc()
         setDataSource()
         layoutVc()
@@ -160,6 +161,7 @@ extension UserinfoVc {
 extension UserinfoVc {
     private func setVc() {
         setCrossBtn()
+        setContentView()
         setNameLb()
         setBioLb()
         setHypen()
@@ -174,6 +176,10 @@ extension UserinfoVc {
         crossBtn.titleLabel?.font = crossBtn.titleLabel?.font.withSize(40)
         crossBtn.addTarget(self, action: #selector(closeBtnAction(_:)), for: .touchUpInside)
     }
+    private func setContentView() {
+        contentView.backgroundColor = .white
+    }
+    
     private func setNameLb() {
         nameLb.font = nameLb.font.withSize(20)
         nameLb.textAlignment = .center
@@ -249,7 +255,7 @@ extension UserinfoVc {
         setSameBaseLayout(with: crossBtn)
         NSLayoutConstraint.activate([
             crossBtn.topAnchor.constraint(
-                equalTo: view.topAnchor,
+                equalTo: view.safeAreaLayoutGuide.topAnchor,
                 constant: padding
             ),
             crossBtn.leadingAnchor.constraint(
@@ -297,7 +303,8 @@ extension UserinfoVc {
             contentView.trailingAnchor.constraint(
                 equalTo: scrollView.trailingAnchor,
                 constant: -padding
-            )
+            ),
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
         ])
     }
     
@@ -441,19 +448,19 @@ extension UserinfoVc {
     }
     
     private func layoutLocationView() {
-        setSameLayoutInContentView(with: loadingView)
+        setSameLayoutInContentView(with: locationIcon)
         NSLayoutConstraint.activate([
-            loadingView.topAnchor.constraint(
+            locationIcon.topAnchor.constraint(
                 equalTo: bustView.bottomAnchor,
                 constant: padding
             ),
-            loadingView.leadingAnchor.constraint(
+            locationIcon.leadingAnchor.constraint(
                 equalTo: contentView.leadingAnchor
             ),
-            loadingView.widthAnchor.constraint(
+            locationIcon.widthAnchor.constraint(
                 equalToConstant: iconLength
             ),
-            loadingView.heightAnchor.constraint(
+            locationIcon.heightAnchor.constraint(
                 equalToConstant: iconLength
             )
         ])
@@ -476,7 +483,7 @@ extension UserinfoVc {
         setSameLayoutInContentView(with: browerIcon)
         NSLayoutConstraint.activate([
             browerIcon.topAnchor.constraint(
-                equalTo: loadingView.bottomAnchor,
+                equalTo: locationIcon.bottomAnchor,
                 constant: padding
             ),
             browerIcon.leadingAnchor.constraint(

@@ -21,6 +21,11 @@ class UserProfileViewModel {
 
 extension UserProfileViewModel: UserProfileCVCellViewModel {
     
+    func getUserInfoUrlString() -> String? {
+        model.url
+    }
+    
+    
     func cancelTask() {
         task?.cancel()
         task = nil
