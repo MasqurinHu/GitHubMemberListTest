@@ -1,0 +1,6 @@
+Why can I For the whole work, the most time-consuming is the use of code layout. Usually in a formal project, most of the layout will use storyboard or xib to accelerate development, except for some interactive special effects that require code.
+
+Why do I use MVVM-C? It is a product of continuous code refactoring, which greatly reduces the burden on viewController. The extra C is a router concept. View and viewController are simply responders, responsible for drawing and receiving events. After acceptance, it is up to the viewModel to decide how to handle it and affect the display of the view at the same time. As for the navigation to another location after the event is over, it will be handled by the coordinator, so in subsequent modifications,
+Where the screen logic is modified, there will be no business logic and navigation code, which avoids other problems caused by the modification.
+
+What is the difference between mvvm-c and viper? For me, it is a lightweight viper with similar functions. Do n’t add things you do n’t need. When everything is used, the only difference from viper is the name. .
